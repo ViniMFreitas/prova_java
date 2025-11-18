@@ -2,29 +2,36 @@ import java.util.Scanner;
 
 public class RevisaoProva {
 
-    // Variáveis Globais (Acessíveis por todos os métodos)
-    static String[] nomes = new String[3]; // Vetor para nomes
-    static double[][] notas = new double[3][2]; // Matriz 3x2 para notas
+    // --- ESCOPO GLOBAL (STATIC) ---
+    // Definimos aqui para que todos os métodos (main, cadastrar, relatorio) possam ver.
+    // Fonte: Métodos, Slide 39
+    static String[] nomes = new String[3];      // Vetor (Array 1D) para nomes
+    static double[][] notas = new double[3][2]; // Matriz (Array 2D) para notas [3 alunos][2 notas]
     static Scanner entrada = new Scanner(System.in);
 
     public static void main(String[] args) {
         int opcao;
 
-        // Menu usando do-while para garantir execução pelo menos uma vez [cite: 943]
+        // --- ESTRUTURA DE REPETIÇÃO: DO-WHILE ---
+        // Garante que o menu apareça pelo menos uma vez.
+        // Fonte: Repetição, Slide 21
         do {
-            System.out.println("\n1 - Cadastrar Alunos e Notas");
+            System.out.println("\n=== SISTEMA DE NOTAS ===");
+            System.out.println("1 - Cadastrar Alunos e Notas");
             System.out.println("2 - Mostrar Relatório");
             System.out.println("3 - Sair");
             System.out.print("Opção: ");
             opcao = entrada.nextInt();
 
-            // Seleção Múltipla [cite: 2947]
+            // --- ESTRUTURA DE SELEÇÃO: SWITCH-CASE ---
+            // Ideal para menus ou verificar valores exatos.
+            // Fonte: Seleção Múltipla, Slide 2
             switch (opcao) {
                 case 1:
-                    cadastrarAlunos(); // Chamada de método [cite: 1464]
+                    cadastrarAlunos(); // Chamada de método (Procedimento)
                     break;
                 case 2:
-                    mostrarRelatorio();
+                    mostrarRelatorio(); // Chamada de método (Procedimento)
                     break;
                 case 3:
                     System.out.println("Saindo...");
@@ -32,43 +39,53 @@ public class RevisaoProva {
                 default:
                     System.out.println("Opção inválida!");
             }
-        } while (opcao != 3);
+        } while (opcao != 3); // Teste lógico no final
     }
 
-    // TODO: Complete este método
+    // --- MÉTODO SEM RETORNO (VOID) ---
+    // Fonte: Métodos, Slide 6
     public static void cadastrarAlunos() {
-        System.out.println("--- Cadastro ---");
-        // DICA: Use um loop 'for' que vá de 0 até nomes.length [cite: 3427]
+        System.out.println("\n--- Cadastro ---");
+
+        // Percorrendo o VETOR de nomes (Array Unidimensional)
+        // Fonte: Array Unidimensional, Slide 28
         for (int i = 0; i < nomes.length; i++) {
             System.out.println("Aluno " + (i + 1) + ":");
 
-            // 1. Limpe o buffer do teclado (necessário ao alternar nextInt e nextLine)
+            // Limpeza de buffer do teclado (essencial ao usar nextInt seguido de nextLine)
             entrada.nextLine();
 
-            // 2. Leia o nome e armazene no vetor 'nomes' JÁ CONVERTIDO para Maiúsculas
-            // SEU CÓDIGO AQUI: nomes[i] = ...
+            System.out.print("Digite o Nome: ");
+            // --- MANIPULAÇÃO DE STRING ---
+            // Lê o nome e já converte para CAIXA ALTA.
+            // Fonte: Manipulação de Texto, Slide 10
+            nomes[i] = entrada.nextLine().toUpperCase();
 
             System.out.print("Nota 1: ");
-            // 3. Leia a primeira nota e guarde na matriz 'notas', linha 'i', coluna 0
-            // SEU CÓDIGO AQUI:
+            // --- MATRIZ (ARRAY BIDIMENSIONAL) ---
+            // Armazenando na linha 'i', coluna 0
+            // Fonte: Array Bidimensional, Slide 9
+            notas[i][0] = entrada.nextDouble();
 
             System.out.print("Nota 2: ");
-            // 4. Leia a segunda nota e guarde na matriz 'notas', linha 'i', coluna 1
-            // SEU CÓDIGO AQUI:
+            // Armazenando na linha 'i', coluna 1
+            notas[i][1] = entrada.nextDouble();
         }
     }
 
-    // TODO: Complete este método
     public static void mostrarRelatorio() {
-        System.out.println("--- Relatório ---");
-        // DICA: Percorra os vetores novamente
+        System.out.println("\n--- Relatório Final ---");
+
         for (int i = 0; i < nomes.length; i++) {
-            // 1. Calcule a média recuperando os dados da matriz
+            // Acessando os dados da Matriz para cálculo
             double media = (notas[i][0] + notas[i][1]) / 2;
 
-            // 2. Use o Operador Ternário para definir "Aprovado" ou "Reprovado" (corte 6.0) [cite: 3097]
-            String status = (media >= 6.0) ? "Aprovado" : "Reprovado";
+            // --- OPERADOR TERNÁRIO ---
+            // (condição) ? valor_se_verdadeiro : valor_se_falso
+            // Fonte: Seleção Múltipla, Slide 10
+            String status = (media >= 6.0) ? "APROVADO" : "REPROVADO";
 
+            // Impressão formatada
             System.out.println("Aluno: " + nomes[i] + " | Média: " + media + " | Status: " + status);
         }
     }
